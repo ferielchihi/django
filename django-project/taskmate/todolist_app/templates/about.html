@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}
+  <title>About US - Taskmate </title>
+{% endblock title %}
+
+
+{% block content %}
+  <div class="container">
+    {%for obj in all_tasks%}
+      {{obj.Task}}
+    {% endfor %}
+{% endblock content %}
