@@ -11,7 +11,7 @@ def todolist(request):
             form.save()
         messages.success(request,("task added!"))
 
-        return redirect('todolist')
+        return redirect('/todolist/')
     else:
         all_tasks=TaskList.objects.all
         return render(request, 'todolist.html',{'all_tasks':all_tasks})
