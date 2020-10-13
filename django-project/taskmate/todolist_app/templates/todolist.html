@@ -11,6 +11,9 @@
   {% for message in messages%}
     <div class="alert alert-success" role="alert">
       {{message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   {% endfor %}
   <form method="POST" class="row">
@@ -18,6 +21,7 @@
     <label class="col-lg-4"></label>
     <input type="text" class="form-control col-lg-6" name="task">
     <button type="submit" class="btn btn-primary col-lg-2">add task</button>
+
   </form>
     </br>
         <table class="table table-bordered">
@@ -34,15 +38,15 @@
               {%if obj.done %}
               <tr class="table-success">
                 <td>{{obj.id}} | {{obj.task}}</td>
-                <td >completed</td>
-                <td>Edit</td>
+                <td ><a href="{% url 'pending_task' obj.id %}">completed</a></td>
+                <td><a href="{% url 'edit_task' obj.id %}">edit</a></td>
                 <td><a href="{% url 'delete_task' obj.id %}">delete</a></td>
               </tr>
               {%else %}
                 <tr>
                   <td>{{obj.id}} | {{obj.task}}</td>
-                  <td>not completed</td>
-                  <td>Edit</td>
+                  <td><a href="{% url 'complete_task' obj.id %}">not completed</a></td>
+                  <td><a href="{% url 'edit_task' obj.id %}">edit</a></td>
                   <td><a href="{% url 'delete_task' obj.id  %}">delete</a></td>
                 </tr>
               {% endif %}
