@@ -54,6 +54,9 @@ def edit_task(request, task_id):
         task_obj=TaskList.objects.get(pk=task_id)
         return render(request, 'edit.html', {'task_obj':task_obj})
 
+def index(request):
+    all_tasks=TaskList.objects.all
+    return render(request, 'index.html',{'all_tasks':all_tasks})
 
 def contact(request):
     all_tasks=TaskList.objects.all

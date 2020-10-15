@@ -6,7 +6,8 @@
 
 {% block content %}
   <div class="container">
-    {%for obj in all_tasks%}
-      {{obj.Task}}
-    {% endfor %}
+    {%for obj in all_tasks %}
+      {{obj.task}}
+    {%endfor%}
+  </div>
 {% endblock content %}
