@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from todolist_app.models import TaskList
 from todolist_app.forms import Taskform
 from django.contrib import messages
+from django.core.paginator import Paginator
 # Create your views here.
 def todolist(request):
     if request.method == "POST":
@@ -13,14 +14,18 @@ def todolist(request):
 
         return redirect('/todolist/')
     else:
-        all_tasks=TaskList.objects.all
+        all_tasks=TaskList.objects.all()
+        paginator=Paginator(all_tasks,5)
+        page=request.GET.get('pg')
+        all_tasks=paginator.get_page(page)
+
         return render(request, 'todolist.html',{'all_tasks':all_tasks})
 
 def delete_task(request, task_id):
     task=TaskList.objects.get(pk=task_id)
     task.delete()
 
-    return redirect('todolist')
+    return redirect('/todolist/')
 
 def complete_task(request, task_id):
     task=TaskList.objects.get(pk=task_id)
@@ -37,15 +42,14 @@ def pending_task(request, task_id):
     return redirect('todolist')
 
 
-
 def edit_task(request, task_id):
     if request.method=="POST":
-        test=TaskList.objects.get(pk=task_id)
-        form=Taskform(request.POST or None, instance=test)
+        task=TaskList.objects.get(pk=task_id)
+        form=Taskform(request.POST or None, instance=task)
         if form.is_valid():
             form.save()
         messages.success(request,("task edited"))
-        return redirect ('todolist')
+        return redirect ('/todolist/')
     else:
         task_obj=TaskList.objects.get(pk=task_id)
         return render(request, 'edit.html', {'task_obj':task_obj})
